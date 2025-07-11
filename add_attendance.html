@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>出席記録</title></head>
+<body>
+  <h1>出席を記録する</h1>
+  <form method="POST">
+    授業: 
+    <select name="class_id">
+      {% for cls in classes %}
+        <option value="{{ cls[0] }}">{{ cls[1] }}</option>
+      {% endfor %}
+    </select><br>
+    日付: <input type="date" name="date"><br>
+    状況: 
+    <select name="status">
+      <option value="出席">出席</option>
+      <option value="欠席">欠席</option>
+      <option value="遅刻">遅刻</option>
+    </select><br>
+    <button type="submit">記録</button>
+  </form>
+  <a href="/">ホーム</a>
+</body>
+</html>

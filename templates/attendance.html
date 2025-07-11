@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ class_name }}の出席記録</title>
+</head>
+<body>
+  <h1>{{ class_name }}の出席状況</h1>
+
+<!-- 出席集計表示 -->
+
+<p>
+  並び順：
+  {% if order == 'asc' %}
+    昇順｜<a href="{{ url_for('view_attendance', class_id=class_id, order='desc') }}">降順に切替</a>
+  {% else %}
+    降順｜<a href="{{ url_for('view_attendance', class_id=class_id, order='asc') }}">昇順に切替</a>
+  {% endif %}
+</p>
+
+
+<p>
+  出席: {{ status_counts.get("出席", 0) }}　
+  欠席: {{ status_counts.get("欠席", 0) }}　
+  遅刻: {{ status_counts.get("遅刻", 0) }}
+</p>
+
+
+<table border="1">
+  <tr>
+    <th>日付</th>
+    <th>状態</th>
+  </tr>
+  {% for date, status in attendance %}
+  <tr>
+    <td>{{ date }}</td>
+    <td>{{ status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>出席登録</h2>
+<form method="POST">
+  <label>日付:</label>
+  <input type="date" name="date" required><br>
+
+  <label>状態:</label>
+  <select name="status" required>
+    <option value="出席">出席</option>
+    <option value="欠席">欠席</option>
+    <option value="遅刻">遅刻</option>
+  </select><br>
+
+  <button type="submit">登録</button>
+</form>
+
+<br>
+<a href="/">← ホームに戻る</a>
+
+</body>
+</html>

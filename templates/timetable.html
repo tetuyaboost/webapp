@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>時間割</title></head>
+<body>
+  <h1>時間割</h1>
+  <ul>
+    {% for cls in classes %}
+      <li>{{ cls[2] }} {{ cls[3] }}限: {{ cls[1] }}（{{ cls[4] }}）</li>
+    {% endfor %}
+  </ul>
+  <a href="/">戻る</a>
+</body>
+</html>

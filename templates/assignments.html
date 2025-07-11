@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ class_name }}の課題管理</title>
+</head>
+<body>
+  <h1>{{ class_name }}の課題一覧</h1>
+
+  <p>
+      表示モード:
+      {% if mode == 'unsubmitted' %}
+        未提出のみ｜<a href="{{ url_for('assignments', class_id=class_id, mode='all') }}">すべて表示に切替</a>
+      {% else %}
+        すべて表示｜<a href="{{ url_for('assignments', class_id=class_id, mode='unsubmitted') }}">未提出のみ表示に切替</a>
+      {% endif %}
+  </p>
+
+
+  <table border="1">
+    <tr>
+      <th>タイトル</th>
+      <th>締切日</th>
+      <th>提出状況</th>
+      <th>備考</th>
+      <th>操作</th>
+    </tr>
+    {% for a in assignments %}
+    <tr>
+      <td>{{ a[1] }}</td>
+      <td>{{ a[2] }}</td>
+      <td>{{ '提出済' if a[3] else '未提出' }}</td>
+      <td>{{ a[4] }}</td>
+      <td>
+        <form action="{{ url_for('toggle_submission', class_id=class_id, assignment_id=a[0]) }}" method="post" style="display:inline;">
+          <button type="submit">{{ '未提出に戻す' if a[3] else '提出済にする' }}</button>
+        </form>
+        <form action="{{ url_for('delete_assignment', class_id=class_id, assignment_id=a[0]) }}" method="post" style="display:inline;">
+          <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>新しい課題を追加</h2>
+  <form method="POST">
+    <label>タイトル:</label>
+    <input type="text" name="title" required><br>
+    <label>締切日:</label>
+    <input type="date" name="deadline" required><br>
+    <label>備考（任意）:</label>
+    <input type="text" name="note"><br>
+    <button type="submit">登録</button>
+  </form>
+
+  <br>
+  <a href="/">← ホームに戻る</a>
+</body>
+</html>

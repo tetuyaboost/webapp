@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>授業の編集</title>
+</head>
+<body>
+  <h1>授業の編集</h1>
+
+  <form method="POST">
+    <label>授業名:</label><br>
+    <input type="text" name="name" value="{{ name }}" required><br><br>
+
+    <label>曜日:</label><br>
+    <select name="day">
+      {% for d in ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日'] %}
+        <option value="{{ d }}" {% if d == day %}selected{% endif %}>{{ d }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>時限:</label><br>
+    <select name="period">
+      {% for p in ['1', '2', '3', '4', '5', '6'] %}
+        <option value="{{ p }}" {% if p == period %}selected{% endif %}>{{ p }}限</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>教室:</label><br>
+    <input type="text" name="room" value="{{ room }}" required><br><br>
+
+    <button type="submit">保存</button>
+  </form>
+
+  <br>
+  <a href="/">← ホームに戻る</a>
+</body>
+</html>

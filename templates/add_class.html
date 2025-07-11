@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>授業追加</title>
+</head>
+<body>
+  <h1>授業追加</h1>
+  <form method="POST">
+    <label>授業名:</label>
+    <input type="text" name="name" required><br>
+
+    <label>曜日:</label>
+    <select name="day" required>
+      <option value="">選択してください</option>
+      <option value="月曜日">月曜日</option>
+      <option value="火曜日">火曜日</option>
+      <option value="水曜日">水曜日</option>
+      <option value="木曜日">木曜日</option>
+      <option value="金曜日">金曜日</option>
+    </select><br>
+
+    <label>時限:</label>
+    <select name="period" required>
+      <option value="">選択してください</option>
+      <option value="1">1限</option>
+      <option value="2">2限</option>
+      <option value="3">3限</option>
+      <option value="4">4限</option>
+      <option value="5">5限</option>
+      <option value="5">6限</option>
+    </select><br>
+
+    <label>教室:</label>
+    <input type="text" name="room" required><br>
+
+    <button type="submit">登録</button>
+  </form>
+
+  <br>
+  <a href="/">← ホームに戻る</a>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ class_name }}の評価方式</title>
+</head>
+<body>
+  <h1>{{ class_name }}の評価方式</h1>
+
+  <table border="1">
+    <tr>
+      <th>評価項目</th>
+      <th>割合（%）</th>
+      <th>削除</th>
+    </tr>
+    {% for eval in evaluations %}
+  <tr>
+    <td>{{ eval[0] }}</td>
+    <td>{{ eval[1] }}</td>
+    <td>
+      <form action="{{ url_for('delete_evaluation', class_id=class_id, eval_id=eval[2]) }}" method="post" style="display:inline;">
+        <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+      </form>
+    </td>
+  </tr>
+    {% endfor %}
+  </table>
+
+  <h2>評価方式を追加</h2>
+  <form method="POST">
+    <label>項目名（例：テスト、レポートなど）:</label>
+    <input type="text" name="method" required><br>
+
+    <label>割合（%）:</label>
+    <input type="number" name="percentage" required min="0" max="100"><br>
+
+    <button type="submit">登録</button>
+  </form>
+
+  <br>
+  <a href="/">← ホームに戻る</a>
+</body>
+</html>
