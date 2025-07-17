@@ -121,6 +121,8 @@ def index():
 # --- ログイン・ログアウト・登録 ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
+    
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
