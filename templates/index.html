@@ -104,11 +104,16 @@
   }
 </style>
 
-
 </head>
 <body>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+    <div><strong>{{ current_user.username }}</strong> さんの時間割</div>
+    <a href="{{ url_for('logout') }}" style="text-decoration: none; color: #0066cc;">ログアウト</a>
+  </div>
+
   <h1>時間割</h1>
-  <div class="table-wrapper"></div>
+  <div class="table-wrapper">
     <table>
       <tr>
         <th>時限＼曜日</th>
@@ -116,56 +121,56 @@
           <th>{{ day }}</th>
         {% endfor %}
       </tr>
+
       {% for period in periods %}
       <tr>
         <th>{{ period }}限</th>
         {% for day in days %}
-      <td
-        {% if timetable[day][period] and timetable[day][period]['unsubmitted'] > 0 %}
-          style="background-color:
-            {% if timetable[day][period]['overdue'] %}
-              mistyrose;
-            {% else %}
-              #fffacd;
-            {% endif %}"
+        <td
+          {% if timetable[day][period] and timetable[day][period]['unsubmitted'] > 0 %}
+            style="background-color:
+              {% if timetable[day][period]['overdue'] %}
+                mistyrose;
+              {% else %}
+                #fffacd;
+              {% endif %}"
           {% endif %}
-      >
+        >
           {% if timetable[day][period] %}
-          {{ timetable[day][period]['name'] }}（{{ timetable[day][period]['room'] }}）<br>
-          {% if timetable[day][period]['unsubmitted'] > 0 %}
-            <span style="color: red;">未提出: {{ timetable[day][period]['unsubmitted'] }}件</span><br>
-            {% if timetable[day][period]['overdue'] %}
-              <span style="color: darkred; font-weight: bold;">⚠︎締切超過あり</span><br>
+            {{ timetable[day][period]['name'] }}（{{ timetable[day][period]['room'] }}）<br>
+            {% if timetable[day][period]['unsubmitted'] > 0 %}
+              <span style="color: red;">未提出: {{ timetable[day][period]['unsubmitted'] }}件</span><br>
+              {% if timetable[day][period]['overdue'] %}
+                <span style="color: darkred; font-weight: bold;">⚠︎締切超過あり</span><br>
+              {% endif %}
             {% endif %}
+
+            <a href="{{ url_for('view_attendance', class_id=timetable[day][period]['id']) }}">
+              <button style="background-color: lightgreen;">出席</button>
+            </a>
+            <a href="{{ url_for('evaluation', class_id=timetable[day][period]['id']) }}">
+              <button style="background-color: lightskyblue;">評価</button>
+            </a>
+            <a href="{{ url_for('assignments', class_id=timetable[day][period]['id']) }}">
+              <button style="background-color: orange;">課題</button>
+            </a>
+            <a href="{{ url_for('edit_class', class_id=timetable[day][period]['id']) }}">
+              <button style="background-color: lightgray;">編集</button>
+            </a>
+            <form method="POST" action="{{ url_for('delete_class', class_id=timetable[day][period]['id']) }}" style="display: inline;">
+              <button type="submit" style="background-color: salmon;">削除</button>
+            </form>
+          {% else %}
+            <span style="color: #bbb;">（未登録）</span>
           {% endif %}
-
-          <a href="{{ url_for('view_attendance', class_id=timetable[day][period]['id']) }}">
-            <button style="background-color: lightgreen;">出席</button>
-          </a>
-          <a href="{{ url_for('evaluation', class_id=timetable[day][period]['id']) }}">
-            <button style="background-color: lightskyblue;">評価</button>
-          </a>
-          <a href="{{ url_for('assignments', class_id=timetable[day][period]['id']) }}">
-            <button style="background-color: orange;">課題</button>
-          </a>
-          <a href="{{ url_for('edit_class', class_id=timetable[day][period]['id']) }}">
-            <button style="background-color: lightgray;">編集</button>
-          </a>
-          <form method="POST" action="{{ url_for('delete_class', class_id=timetable[day][period]['id']) }}" style="display: inline;">
-            <button type="submit" style="background-color: salmon;">削除</button>
-          </form>
-
-        {% else %}
-          -
-        {% endif %}
-      </td>
-
+        </td>
         {% endfor %}
       </tr>
       {% endfor %}
     </table>
   </div>
+
   <br />
-  <a href="/add_class">授業を追加する</a>
+  <a href="{{ url_for('add_class') }}">授業を追加する</a>
 </body>
 </html>
