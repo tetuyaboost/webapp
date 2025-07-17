@@ -317,4 +317,5 @@ def delete_assignment(class_id, assignment_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Renderの環境変数PORTを取得
+    app.run(host='0.0.0.0', port=port, debug=True)
